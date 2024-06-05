@@ -1,0 +1,106 @@
+@font-face {
+  font-family: MUNI;
+  src: url(muni-bold.otf);
+}
+
+#layout-container 
+{
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    position: fixed;
+}
+
+#map-container {
+    float: left;
+    width: 75%;
+    height: 100%;
+}
+
+#sidebar-container {
+    float: right;
+    width: 25%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#map
+{ 
+    height: 100%;
+    width: 100%;
+}
+
+#sidebar 
+{
+    height: 100%;
+    width: 100%;
+    float: right;
+}
+
+#topbar
+{
+    height: 60px;
+    width: 100%;
+    background: #0000dc;
+}
+
+#topbar-text
+{
+    height: 100%;
+    width: 100%;
+    font-family: MUNI;
+    font-size: 20px;
+    color: white;
+    text-align: left;
+    padding-left: 20px;
+    padding-top: 5px;
+    margin: 0;
+    overflow: hidden;
+}
+
+#sidebar-content
+{
+    margin: 20px;
+    font-family: sans-serif;
+}
+
+.leaflet-control-defaultextent-toggle {
+    background-image: url('extentIcon.svg');
+}
+
+.leaflet-tooltip.my-labels {
+    border-color: transparent;
+    top: -6px;
+  }
+
+*:focus {
+    outline: 0;
+}
+
+#legend {
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#legend-element {
+    display: flex;
+    font-size: 12px;
+}
+
+#legend-text {
+    margin: 0;
+    padding-left: 10px;
+    line-height: 20px;
+}
+
+#hide-dwellings {
+    display: none;
+}
+
+#hide-settlements {
+    display: block;
+}
