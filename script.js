@@ -17,7 +17,7 @@ map.addLayer(hexa);
 
 
 
-var imageUrl = 'https://i.ibb.co/ZK39vXm/Layout.png',
+var imageUrl = 'https://i.ibb.co/hcqBH3c/Port.png',
     imageBounds = [[36.962295943144255, -9.509959545772267], [42.14680090712174, -6.1849077721580885]],
     image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
