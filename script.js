@@ -2,6 +2,11 @@ var map = L.map('map').setView([39.449811170044626, -8.206305119865776], 6);
 
 var lastClicked;
 
+L.control.defaultExtent()
+  .addTo(map);
+
+  map.attributionControl.addAttribution('Created by: <b>Ondrej Kvarda</b>');
+
 
 var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -43,6 +48,12 @@ function displayValue(feature, layer) {
             lastClicked.setStyle({weight: 0});
         }
         lastClicked = e.target;
+    });
+
+    map.on('click', function() {
+        if (lastClicked) {
+            lastClicked.setStyle({weight: 0});
+        }
     });
 };
 
@@ -123,3 +134,12 @@ function gridColor(feature) {
         }
 }    
 }
+
+
+var btn = document.getElementById('filterButton')
+
+btn.addEventListener('click', function(){
+   var minValue = document.getElementById('MinValue').value;
+   var maxValue = document.getElementById('MaxValue').value;
+   console.log(minValue);
+});

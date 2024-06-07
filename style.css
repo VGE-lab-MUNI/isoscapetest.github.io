@@ -13,3 +13,31 @@ html, #container {
 path.leaflet-interactive:focus {
     outline: none;
 }
+
+.leaflet-control-defaultextent-toggle {
+    background-image: url('extentIcon.svg');
+}
+
+#filterButton {
+  position: absolute;
+  top: 90px;
+  right: 20px;
+  padding: 5px;
+  z-index: 1000;
+}
+
+#MinValue {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 3px;
+  z-index: 1000;
+}
+
+#MaxValue {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  padding: 3px;
+  z-index: 1000;
+}
