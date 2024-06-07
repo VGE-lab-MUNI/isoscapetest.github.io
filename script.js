@@ -1,5 +1,7 @@
 var map = L.map('map').setView([39.449811170044626, -8.206305119865776], 6);
 
+var lastClicked;
+
 
 var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -30,13 +32,22 @@ map.on('zoomend', function(){
 );
 
 function displayValue(feature, layer) {
-   
+
     label = "<center>" + "87Sr/86Sr mean value: " + "<b>" + String(Math.round(feature.properties.MEAN* 10000) / 10000);
-    
-    layer.bindTooltip(label, {className: "my-labels", direction: "top"});
 
+    layer.bindPopup(label, {className: "my-labels", direction: "top"});
 
+    layer.on('click', function(e) {
+        e.target.setStyle({weight: 3});
+        if (lastClicked) {
+            lastClicked.setStyle({weight: 0});
+        }
+        lastClicked = e.target;
+    });
 };
+
+
+
 
 
 function gridColor(feature) {
@@ -105,6 +116,7 @@ function gridColor(feature) {
         }
     } else {
         return {
+            fillColor: "#9E0142",
             color: "#9E0142",
             weight: 0,
             fillOpacity: 0.5
