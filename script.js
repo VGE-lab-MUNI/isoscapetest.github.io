@@ -1,6 +1,7 @@
 var map = L.map('map').setView([39.449811170044626, -8.206305119865776], 6);
 
 var lastClicked;
+var isFiltering = false;
 
 L.control.defaultExtent()
   .addTo(map);
@@ -18,7 +19,6 @@ var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/li
 
 const hexagrid = "https://gist.githubusercontent.com/VGE-lab-MUNI/b363c6dbb7fd390680c10287ba67ff4f/raw/0d96ba2c7ba5873c7f8385d36d96abfd84dbc2bd/PortugalIsoHexa.geojson"
 var hexa = new L.GeoJSON.AJAX(hexagrid, {style: gridColor, onEachFeature: displayValue});
-map.addLayer(hexa);
 
 
 
@@ -26,19 +26,22 @@ var imageUrl = 'https://i.ibb.co/hcqBH3c/Port.png',
     imageBounds = [[36.962295943144255, -9.509959545772267], [42.14680090712174, -6.1849077721580885]],
     image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
+
 map.on('zoomend', function(){
-    if (map.getZoom() > 8) 
+    if (map.getZoom() > 8 && !isFiltering) 
         {
             image.setStyle({opacity: 0.001});
-        } else {
+            map.addLayer(hexa);
+        } else if (!isFiltering) {
             image.setStyle({opacity: 1});
+            clear(hexa);
         }
     }
 );
 
 function displayValue(feature, layer) {
 
-    label = "<center>" + "87Sr/86Sr mean value: " + "<b>" + String(Math.round(feature.properties.MEAN* 10000) / 10000);
+    label = "<center>" + "<sup>" + "87" + "</sup>" + "Sr/" + "<sup>" + "86" + "</sup>" + "Sr" + " mean value: " + "<b>" + String(Math.round(feature.properties.MEAN* 10000) / 10000);
 
     layer.bindPopup(label, {className: "my-labels", direction: "top"});
 
@@ -137,9 +140,53 @@ function gridColor(feature) {
 
 
 var btn = document.getElementById('filterButton')
+var btn2 = document.getElementById('clearButton')
 
-btn.addEventListener('click', function(){
-   var minValue = document.getElementById('MinValue').value;
-   var maxValue = document.getElementById('MaxValue').value;
-   console.log(minValue);
+
+btn.addEventListener('click', function(layer){
+    
+    clear();
+    image.setStyle({opacity: 0.001});
+    isFiltering = true;
+
+    const hexagrid = "https://gist.githubusercontent.com/VGE-lab-MUNI/b363c6dbb7fd390680c10287ba67ff4f/raw/0d96ba2c7ba5873c7f8385d36d96abfd84dbc2bd/PortugalIsoHexa.geojson"
+    var hexa = new L.GeoJSON.AJAX(hexagrid, {style: gridFilter, onEachFeature: displayValue});
+    map.addLayer(hexa);
+ 
 });
+
+btn2.addEventListener('click', function(layer){
+    clear();
+    const hexagrid = "https://gist.githubusercontent.com/VGE-lab-MUNI/b363c6dbb7fd390680c10287ba67ff4f/raw/0d96ba2c7ba5873c7f8385d36d96abfd84dbc2bd/PortugalIsoHexa.geojson"
+    var hexa = new L.GeoJSON.AJAX(hexagrid, {style: gridColor, onEachFeature: displayValue});
+    map.addLayer(hexa);
+    //image.setStyle({opacity: 1});
+    isFiltering = false;
+});
+
+
+
+function clear() {
+    map.removeLayer(hexa);
+}
+
+function gridFilter(feature) {
+    var minValue = document.getElementById('MinValue').value;
+    var maxValue = document.getElementById('MaxValue').value;
+    if (feature.properties.MEAN < maxValue && feature.properties.MEAN > minValue) {
+        return {
+            fillColor: "#f46862",
+            color: "#f46862",
+            weight: 0,
+            fillOpacity: 0.5
+        }
+        
+    } else {
+        return {
+            fillColor: "white",
+            color: "white",
+            weight: 0,
+            fillOpacity: 0.0001
+        }
+    }
+};

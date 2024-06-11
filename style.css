@@ -26,6 +26,14 @@ path.leaflet-interactive:focus {
   z-index: 1000;
 }
 
+#clearButton {
+  position: absolute;
+  top: 130px;
+  right: 20px;
+  padding: 5px;
+  z-index: 1000;
+}
+
 #MinValue {
   position: absolute;
   top: 20px;
