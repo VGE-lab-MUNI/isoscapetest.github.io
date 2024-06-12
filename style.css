@@ -1,14 +1,31 @@
 #map { 
-height: 50em; 
-width:  80em;
+height: 85%; 
+width:  100%;
+position: absolute;
+left: 0px;
+right: 0px;
+bottom: 0px; 
 }
+
+#header {
+	height: 15%;
+	width: 100%;
+	position: absolute;
+	background-color: #3153CE;
+	top: 0px;
+}
+
+
 
 html, #container { 
 	height:  100%;
+	width: 100%;
 	display:  flex;
 	align-items: center;
 	justify-content: center;
 }
+
+
 
 path.leaflet-interactive:focus {
     outline: none;
@@ -18,34 +35,82 @@ path.leaflet-interactive:focus {
     background-image: url('extentIcon.svg');
 }
 
-#filterButton {
-  position: absolute;
-  top: 90px;
-  right: 20px;
-  padding: 5px;
-  z-index: 1000;
+.button {
+	background-color: #3153CE;
+  	border: none;
+  	color: white;
+  	text-align: center;
+  	text-decoration: none;
+  	padding: 10px 15px;
+  	font-size: 16px;
+  	transition-duration: 0.4s;
 }
 
-#clearButton {
-  position: absolute;
-  top: 130px;
-  right: 20px;
-  padding: 5px;
-  z-index: 1000;
+.button:hover {
+  	background-color: #21398D;
+  	cursor: pointer;
 }
 
-#MinValue {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  padding: 3px;
-  z-index: 1000;
+.button:active { 
+    transform: scale(0.9); 
+} 
+
+#buttonDiv {
+	display: inline-flex;
+  	flex-direction: row;
+  	position: absolute;
+  	column-gap: 1em;
+  	width: 65%;
+  	height: 3em;
+  	top: 65%;
+  	left: 50%;
+	margin: 0 0 0 -6em;
 }
 
-#MaxValue {
-  position: absolute;
-  top: 50px;
-  right: 20px;
-  padding: 3px;
-  z-index: 1000;
+#inputDiv {
+	display: inline-flex;
+  	flex-direction: column;
+  	position: relative;
+  	grid-row-gap: 1em;
+  	width: 80%;
+  	height: 6em;
+  	top: 10%;
+  	left: 50%;
+  	margin: 0 0 0 -6em;
+}
+
+#innerContainer {
+	width: 80%;
+	height: 100%;
+	margin: 0 auto;
+}
+
+.input {
+	padding: 10px 10px;
+}
+
+#filterContainer {
+	display: inline-flex;
+  	flex-direction: column;
+  	position: absolute;
+  	width: 19em;
+  	height: 17em;
+  	top: 2em;
+  	right: 2em;
+  	z-index: 1000;
+  	background: rgba(49,83,206, 0.5);
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#title {
+	font-weight: bold;
+	color:  white;
+	font-size: 2em;
+	margin-left: 2em;
+	font-family: Arial, Helvetica, sans-serif;
 }

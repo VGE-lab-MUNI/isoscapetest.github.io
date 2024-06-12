@@ -6,19 +6,20 @@ var isFiltering = false;
 L.control.defaultExtent()
   .addTo(map);
 
-  map.attributionControl.addAttribution('Created by: <b>Ondrej Kvarda</b>');
+map.attributionControl.addAttribution('Created by: <b>Ondrej Kvarda</b>');
 
 
 var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains: 'abcd',
     maxZoom: 20,
-    minZoom: 1
+    minZoom: 6
 }).addTo(map);
 
 
 const hexagrid = "https://gist.githubusercontent.com/VGE-lab-MUNI/b363c6dbb7fd390680c10287ba67ff4f/raw/0d96ba2c7ba5873c7f8385d36d96abfd84dbc2bd/PortugalIsoHexa.geojson"
 var hexa = new L.GeoJSON.AJAX(hexagrid, {style: gridColor, onEachFeature: displayValue});
+var hexa2 = new L.GeoJSON.AJAX(hexagrid, {style: gridFilter, onEachFeature: displayValue});
 
 
 
@@ -32,7 +33,8 @@ map.on('zoomend', function(){
         {
             image.setStyle({opacity: 0.001});
             map.addLayer(hexa);
-        } else if (!isFiltering) {
+        } else if (!isFiltering)
+        {
             image.setStyle({opacity: 1});
             clear(hexa);
         }
@@ -63,14 +65,13 @@ function displayValue(feature, layer) {
 
 
 
-
 function gridColor(feature) {
     if (feature.properties.MEAN < 0.710899) {
         return {
             fillColor: "#5E4FA2",
             color: "#5E4FA2",
             weight: 0,
-            fillOpacity: 0.5,
+            fillOpacity: 0.5
         }
     } else if (feature.properties.MEAN < 0.712581) {
         return {
@@ -139,36 +140,38 @@ function gridColor(feature) {
 }
 
 
-var btn = document.getElementById('filterButton')
-var btn2 = document.getElementById('clearButton')
+var btn = document.getElementById('filterButton');
+var btn2 = document.getElementById('clearButton');
 
+btn.addEventListener('click', function(){
 
-btn.addEventListener('click', function(layer){
-    
-    clear();
+    clear(hexa);
+    var hexa2 = new L.GeoJSON.AJAX(hexagrid, {style: gridFilter, onEachFeature: displayValue});
+    map.addLayer(hexa2);
     image.setStyle({opacity: 0.001});
     isFiltering = true;
-
-    const hexagrid = "https://gist.githubusercontent.com/VGE-lab-MUNI/b363c6dbb7fd390680c10287ba67ff4f/raw/0d96ba2c7ba5873c7f8385d36d96abfd84dbc2bd/PortugalIsoHexa.geojson"
-    var hexa = new L.GeoJSON.AJAX(hexagrid, {style: gridFilter, onEachFeature: displayValue});
-    map.addLayer(hexa);
  
 });
 
-btn2.addEventListener('click', function(layer){
-    clear();
-    const hexagrid = "https://gist.githubusercontent.com/VGE-lab-MUNI/b363c6dbb7fd390680c10287ba67ff4f/raw/0d96ba2c7ba5873c7f8385d36d96abfd84dbc2bd/PortugalIsoHexa.geojson"
-    var hexa = new L.GeoJSON.AJAX(hexagrid, {style: gridColor, onEachFeature: displayValue});
+btn2.addEventListener('click', function(){
+
+    map.eachLayer(function (layer) {
+    map.removeLayer(layer);
+    });
+    CartoDB_PositronNoLabels.addTo(map);
+    image.addTo(map);
     map.addLayer(hexa);
-    //image.setStyle({opacity: 1});
     isFiltering = false;
+    document.getElementById('MinValue').value = null;
+    document.getElementById('MaxValue').value = null;
+
 });
 
 
-
-function clear() {
-    map.removeLayer(hexa);
+function clear(layer) {
+    map.removeLayer(layer);
 }
+
 
 function gridFilter(feature) {
     var minValue = document.getElementById('MinValue').value;
