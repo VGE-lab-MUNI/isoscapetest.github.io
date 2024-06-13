@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <link rel="stylesheet" type="text/css" href="style.css"/>
 </head>
+
+<body onload="myFunction()" style="margin:0;">
+
+<div id="loader"></div>
 
 <div id="container">
 
@@ -17,6 +21,7 @@
                 <div id="buttonDiv">
                     <button id="filterButton" class="button">Filter</button>
                     <button id="clearButton" class="button">Clear</button>
+                    <a href='#' id='export'>Export Features</a>
                 </div>
                 <div id="inputDiv">
                     <input type="number" id="MinValue" class="input" placeholder="87Sr/86Sr MinValue">
@@ -25,8 +30,12 @@
             </div>
         </div>
     </div>
+    <div id="cover">
+    </div>
 
 </div>
+
+</body>
 
     
 
@@ -34,6 +43,8 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="crossorigin=""></script>
 <script src="plugins/leaflet.ajax.js"></script>
 <script src="plugins/leaflet.defaultextent.js"></script>
+<script src="plugins/easyPrint/dist/bundle.js"></script>
 <script src="script.js"></script>
+<script src="mapScript.js"></script>
 
 </html>

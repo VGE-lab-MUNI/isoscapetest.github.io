@@ -7,6 +7,18 @@ right: 0px;
 bottom: 0px; 
 }
 
+#cover { 
+height: 85%; 
+width:  100%;
+position: absolute;
+left: 0px;
+right: 0px;
+bottom: 0px;
+z-index: 1001;
+background-color: white;
+opacity: 50%;
+}
+
 #header {
 	height: 15%;
 	width: 100%;
@@ -114,3 +126,77 @@ input::-webkit-inner-spin-button {
 	margin-left: 2em;
 	font-family: Arial, Helvetica, sans-serif;
 }
+
+
+
+
+#loader {
+  position: absolute;
+  left: 50%;
+  top: 57.5%;
+  z-index: 1002;
+  width: 5em;
+  height: 5em;
+  margin: -4em 0 0 -4em;
+  border: 16px solid white;
+  border-radius: 50%;
+  border-top: 16px solid #3153CE;
+  -webkit-animation: spin 2s linear infinite;
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+.gitButton{
+			padding:15px 30px;
+			background-color: #47a230;
+			text-decoration: none;
+			font-weight: 900;
+			color: white;
+			text-transform:uppercase;
+			transition: background-color .5s;
+			border: none;
+    		border-radius: 2px;
+    		cursor: pointer;
+		}
+		.gitButton:hover {background-color: #1d7806}
+		.gitButton:visited {color: white;}
+		.manualButton {
+			padding:15px 30px;
+			background-color: #308ba2;
+			margin-left: 40px;
+			text-decoration: none;
+			font-weight: 900;
+			color: white;
+			text-transform:uppercase;
+			transition: background-color .5s;
+			border: none;
+    		border-radius: 2px;			
+    		cursor: pointer;
+		}
+
+#kek {
+	width: 2.4em;
+	height: 2.4em;
+	background-color: white;
+	border-radius: 3px;
+	border-color: #B2B3B1;
+	background-image: url('geoJSON.svg');
+	background-repeat: no-repeat;
+	background-size: 2.1em 2.1em;
+}
+
+#kek:hover {
+  	background-color: #E9EAE9;
+  	cursor: pointer;
+}
+
