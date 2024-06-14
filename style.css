@@ -184,19 +184,23 @@ input::-webkit-inner-spin-button {
     		cursor: pointer;
 		}
 
-#kek {
+#exportContainer {
 	width: 2.4em;
 	height: 2.4em;
 	background-color: white;
-	border-radius: 3px;
-	border-color: #B2B3B1;
+	margin-left: 0.9em;
+	border-radius: 0.2em;
+	outline-color: black;
+	border-style: solid;
+	border-color: #B9BDB9;
+	border-width: 0.15em;
 	background-image: url('geoJSON.svg');
 	background-repeat: no-repeat;
-	background-size: 2.1em 2.1em;
+	background-size: 2.3em 2.3em;
 }
 
-#kek:hover {
-  	background-color: #E9EAE9;
+#exportContainer:hover {
+  	background-color: #EEEFEE;
   	cursor: pointer;
 }
 

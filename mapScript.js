@@ -207,19 +207,6 @@ function gridFilter(feature) {
     }
 };
 
-document.getElementById('export').onclick = function(e) {
-
-var geojson = hexa.toGeoJSON();
-
-var convertedData = 'text/json;charset=utf-8,' + encodeURIComponent(JSON.stringify(geojson));
-
-            // Create export
-document.getElementById('export').setAttribute('href', 'data:' + convertedData);
-document.getElementById('export').setAttribute('download','data.geojson');
-console.log(geojson);
-
-}
-
 
 var customControl =  L.Control.extend({
 
@@ -230,7 +217,7 @@ var customControl =  L.Control.extend({
   onAdd: function (map) {
     var container = L.DomUtil.create('a');
     container.title="Export visible layers to geoJSON";
-    container.id = "kek";
+    container.id = "exportContainer";
     container.style.height = '2.4em';
     container.style.width = '2.4em';
     
