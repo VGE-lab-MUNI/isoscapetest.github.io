@@ -6,32 +6,7 @@ var isFiltering = false;
 L.control.defaultExtent()
   .addTo(map);
 
-fetch("https://github.com/VGE-lab-MUNI/isoscapetest.github.io/blob/main/GeoTIFF/EBK.tif").then((response) => {
-  response.arrayBuffer().then((arrayBuffer) => {
-    var georaster = parseGeoraster(arrayBuffer).then((georaster) => {
-      var layer = new GeoRasterLayer({
-        georaster: georaster,
-        opacity: 0.7,
-        resolution: 64,
-      });
-      layer.addTo(map);
-      map.fitBounds(layer.getBounds());
-    });
-  });
-});
 
-map.on("click", function (event) {
-  var lat = event.latlng.lat;
-  var lng = event.latlng.lng;
-  var value = geoblaze.identify(georaster, [lng, lat]);
-
-
-  // add popup and marker on click
-  var marker = L.marker([lat, lng])
-    .addTo(map)
-    .bindPopup("Raster Value: " + value)
-    .openPopup();
-});
 
 var printPlugin = L.easyPrint({
     title: 'Export map (PNG raster)',
@@ -64,6 +39,20 @@ var hexa2 = new L.GeoJSON.AJAX(hexagrid, {style: gridFilter, onEachFeature: disp
 var imageUrl = 'https://i.ibb.co/hcqBH3c/Port.png',
     imageBounds = [[36.962295943144255, -9.509959545772267], [42.14680090712174, -6.1849077721580885]],
     image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
+
+
+map.on("click", function (event) {
+  var lat = event.latlng.lat;
+  var lng = event.latlng.lng;
+  var value = geoblaze.identify(imageUrl, [lng, lat]);
+
+
+  // add popup and marker on click
+  var marker = L.marker([lat, lng])
+    .addTo(map)
+    .bindPopup("Raster Value: " + value)
+    .openPopup();
+});
 
 
 map.on('zoomend', function(){
