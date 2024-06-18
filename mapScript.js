@@ -58,14 +58,9 @@ map.on('zoomend', function(){
     }
 );
 
-const tilelayer = new GLOperations({
-  url: 'https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
-  colorScale: [
-    { offset: 0, color: 'rgb(255, 0, 0)', label: 'zero' },
-    { offset: 1, color: 'rgb(0, 0, 255)', label: 'one' },
-  ],
-  nodataValue: -999999,
-}).addTo(map);
+
+
+
 
 
 function displayValue(feature, layer) {
