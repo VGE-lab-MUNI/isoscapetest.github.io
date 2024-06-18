@@ -2,6 +2,7 @@ var map = L.map('map').setView([39.449811170044626, -8.206305119865776], 6);
 
 var lastClicked;
 var isFiltering = false;
+const { GLOperations } = L.TileLayer;
 
 L.control.defaultExtent()
   .addTo(map);
@@ -41,18 +42,7 @@ var imageUrl = 'https://i.ibb.co/hcqBH3c/Port.png',
     image = L.imageOverlay(imageUrl, imageBounds).addTo(map);
 
 
-map.on("click", function (event) {
-  var lat = event.latlng.lat;
-  var lng = event.latlng.lng;
-  var value = geoblaze.identify(imageUrl, [lng, lat]);
 
-
-  // add popup and marker on click
-  var marker = L.marker([lat, lng])
-    .addTo(map)
-    .bindPopup("Raster Value: " + value)
-    .openPopup();
-});
 
 
 map.on('zoomend', function(){
@@ -67,6 +57,16 @@ map.on('zoomend', function(){
         }
     }
 );
+
+const tilelayer = new GLOperations({
+  url: 'https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png',
+  colorScale: [
+    { offset: 0, color: 'rgb(255, 0, 0)', label: 'zero' },
+    { offset: 1, color: 'rgb(0, 0, 255)', label: 'one' },
+  ],
+  nodataValue: -999999,
+}).addTo(map);
+
 
 function displayValue(feature, layer) {
 
