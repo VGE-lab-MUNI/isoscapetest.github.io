@@ -9,7 +9,7 @@ var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/li
 
 const boundaries = "https://gist.githubusercontent.com/VGE-lab-MUNI/1fdc942f1d359ad4968b8409dc8ce801/raw/9c85a7d415e7ad27cb0f2de1ca8ed4b121486897/portugalBound.geojson";
 
-fetch("../GeoTIFF/EBK.tif")
+fetch("GeoTIFF/EBK.tif")
   .then(response => response.arrayBuffer())
   .then(arrayBuffer => {
     parseGeoraster(arrayBuffer).then(georaster => {
