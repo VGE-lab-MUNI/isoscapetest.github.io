@@ -1,4 +1,5 @@
 var map = L.map('map', {minZoom:6, maxZoom:20}).setView([39.449811170044626, -8.206305119865776], 6);
+let hexagrid;
 
 var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
@@ -9,6 +10,9 @@ var CartoDB_PositronNoLabels = L.tileLayer('https://{s}.basemaps.cartocdn.com/li
 
 const boundaries = "https://gist.githubusercontent.com/VGE-lab-MUNI/1fdc942f1d359ad4968b8409dc8ce801/raw/9c85a7d415e7ad27cb0f2de1ca8ed4b121486897/portugalBound.geojson";
 
+originalGrid();
+
+function originalGrid() {
 fetch("./GeoTIFF/EBK.tif")
   .then(response => response.arrayBuffer())
   .then(arrayBuffer => {
@@ -49,6 +53,7 @@ fetch("./GeoTIFF/EBK.tif")
       layer.addTo(map);
 
       //map.fitBounds(layer.getBounds());
+      hexagrid = layer;
 
       map.on("click", function(event) {
         var lat = event.latlng.lat;
@@ -59,6 +64,7 @@ fetch("./GeoTIFF/EBK.tif")
       });
   });
 });
+};
 
 
 
@@ -74,13 +80,76 @@ var printPlugin = L.easyPrint({
     title: 'Export map (PNG raster)',
     position: 'topleft',
     sizeModes: ['A4Landscape'],
-    hideClasses: ['button', 'input'],
     filename: 'isoscapeExport',
     exportOnly: true
 }).addTo(map);
 
 
 map.attributionControl.addAttribution('Created by: <b>Ondrej Kvarda</b>');
+
+var btn = document.getElementById('filterButton');
+var btn2 = document.getElementById('clearButton');
+
+btn.addEventListener('click', function(){
+
+    clear(hexagrid);
+    gridFilter()
+ 
+});
+
+btn2.addEventListener('click', function(){
+
+    clear(hexagrid);
+    originalGrid();
+    document.getElementById('MinValue').value = null;
+    document.getElementById('MaxValue').value = null;
+
+});
+
+
+function gridFilter() {
+    var minValue = document.getElementById('MinValue').value;
+    var maxValue = document.getElementById('MaxValue').value;
+    filteredGrid(minValue, maxValue);
+};
+
+function clear(layer) {
+    map.removeLayer(layer);
+}
+
+function filteredGrid(minValue, maxValue) {
+    fetch("./GeoTIFF/EBK.tif")
+  .then(response => response.arrayBuffer())
+  .then(arrayBuffer => {
+    parseGeoraster(arrayBuffer).then(georaster => {
+
+      var layer = new GeoRasterLayer({
+          georaster: georaster,
+          opacity: 0.7,
+          pixelValuesToColorFn: function (value) {
+            if (value > minValue && value < maxValue) {
+                return "red";
+            } else {
+                return "transparent";
+            }
+          },
+          resolution: 512
+      });
+      layer.addTo(map);
+
+      //map.fitBounds(layer.getBounds());
+      hexagrid = layer;
+
+      map.on("click", function(event) {
+        var lat = event.latlng.lat;
+        var lng = event.latlng.lng;
+        var value = geoblaze.identify(georaster, [lng, lat]);
+
+        layer.bindPopup("<center>" + "<sup>" + "87" + "</sup>" + "Sr/" + "<sup>" + "86" + "</sup>" + "Sr" + " mean value: " + "<b>" + String(Math.round(value* 10000) / 10000)).openPopup([lat, lng]);
+      });
+  });
+});
+}
 
 
 /* 
